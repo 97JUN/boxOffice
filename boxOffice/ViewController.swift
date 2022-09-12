@@ -20,36 +20,56 @@ struct DailyBoxOfficeList : Codable {
 }
 
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate{
     
     @IBOutlet weak var table: UITableView!
+    @IBOutlet weak var dateInput: UITextField!
     
-    let movieURL = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=298a0ec296e8096e6d71d4d05b016b7d&targetDt=20220707"
+    var movieURL = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=298a0ec296e8096e6d71d4d05b016b7d&targetDt="
     
     var movieData : MovieData? //이니셜라이저도 없어서 옵셔널형으로 해준것이다. (초기값이 뭔지 모르기때문에)
-    
-    
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         table.delegate = self
         table.dataSource = self
-        getData()
+        dateInput.delegate = self
+        
+        getData(with: movieURL)
         
     }
+    @IBAction func searchPressed(_ sender: Any) {
+        dateInput.endEditing(true)
+        
+        
+    }
+    func fetchURL(date: String) {
+        let fetchURL = "\(movieURL)\(date)"
+        getData(with: fetchURL)
+    }
+
+     func textFieldDidEndEditing(_ textField: UITextField) {
+        if let dateText = dateInput.text {
+            fetchURL(date: dateText)
+        }
+        dateInput.text = ""
+    }
     
-    func getData() {
-        if let url = URL(string: movieURL) {    //nil이 아닐때만 {}안으로 들어간다
-            let session = URLSession(configuration: .default)
-            let task = session.dataTask(with: url) { data, response, error in
+    func getData(with fetchURL: String) {
+        if let url = URL(string: fetchURL) {    //nil이 아닐때만 {}안으로 들어간다.  1단계
+            let session = URLSession(configuration: .default)       //2단계(Create a URLSession)
+            let task = session.dataTask(with: url) { data, response, error in// 3단계( give a task)
                 if error != nil {
                     print(error!)
-                    return
+                    return //에러가 있는경우
                 }
                 if let JSONdata = data {
                     //                    let dataString = String(data: JSONdata, encoding:.utf8)
                     //                    print(dataString!)
+                    
+                    ///////parseJSON 부분
+                    ///
                     let decoder = JSONDecoder()
                     do {
                         let decodedData = try decoder.decode(MovieData.self, from: JSONdata) //.self는 metatype로 decode에 JSONdata라는 값을 넣으려면 변환이 필요해서 변환하기위해
@@ -64,7 +84,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     }
                 }
             }
-            task.resume()
+            task.resume() //4단계 start the task
         }
         
     }
@@ -88,8 +108,33 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        dateInput.endEditing(true)
+        
+        return true
+    }
     
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if textField.text != "" {
+            return true
+        }else {
+            textField.placeholder = "날짜를 입력하세요."
+            return false
+        }
+    }
+//
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        if let date = dateInput.text {
+//            fetchDate(date: date)
+//        }
+//
+//        dateInput.text = ""
+//
+//    }
     
-    
+    func fetchDate(date: String) {
+        movieURL += dateInput.text!
+      
+    }
 }
 

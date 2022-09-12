@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="kHY-Uw-gFl">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="147" width="414" height="715"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="myCell" rowHeight="73" id="uaX-6X-inS" customClass="MyTableViewCell" customModule="boxOffice" customModuleProvider="target">
@@ -48,17 +48,46 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="YYYYMMDD형식으로 입력하세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W4S-du-vXL">
+                                <rect key="frame" x="20" y="69" width="301" height="43"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="301" id="Ghq-X6-krW"/>
+                                    <constraint firstAttribute="height" constant="43" id="bWt-8t-2TW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6eH-DD-m57">
+                                <rect key="frame" x="348" y="69" width="46" height="43"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="43" id="HST-X6-QZu"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="magnifyingglass" catalog="system" title=""/>
+                                <connections>
+                                    <action selector="searchPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="b4f-K3-lVR"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="kHY-Uw-gFl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="AIl-uM-ffu"/>
-                            <constraint firstItem="kHY-Uw-gFl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="BNc-wN-dAQ"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="kHY-Uw-gFl" secondAttribute="bottom" id="hWr-tu-ZiC"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="kHY-Uw-gFl" secondAttribute="trailing" id="huo-3Q-HHX"/>
+                            <constraint firstItem="kHY-Uw-gFl" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="AAP-WQ-gVj"/>
+                            <constraint firstItem="kHY-Uw-gFl" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="NeA-uA-TTO"/>
+                            <constraint firstItem="W4S-du-vXL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="V1M-MC-xu7"/>
+                            <constraint firstItem="W4S-du-vXL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="WpB-C6-dl4"/>
+                            <constraint firstItem="kHY-Uw-gFl" firstAttribute="top" secondItem="W4S-du-vXL" secondAttribute="bottom" constant="35" id="XCm-00-0Tr"/>
+                            <constraint firstItem="6eH-DD-m57" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="25" id="cya-xr-KvJ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6eH-DD-m57" secondAttribute="trailing" constant="20" id="dEr-CF-cu0"/>
+                            <constraint firstItem="W4S-du-vXL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="25" id="glo-fa-8nv"/>
+                            <constraint firstItem="kHY-Uw-gFl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="pQN-or-pgC"/>
+                            <constraint firstItem="6eH-DD-m57" firstAttribute="leading" secondItem="W4S-du-vXL" secondAttribute="trailing" constant="27" id="qFK-BX-wi8"/>
+                            <constraint firstItem="W4S-du-vXL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="25" id="rhX-IW-cgK"/>
+                            <constraint firstItem="6eH-DD-m57" firstAttribute="leading" secondItem="W4S-du-vXL" secondAttribute="trailing" constant="27" id="wOG-CD-twK"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="dateInput" destination="W4S-du-vXL" id="3wS-sD-RU6"/>
                         <outlet property="table" destination="kHY-Uw-gFl" id="nIN-3H-JM8"/>
                     </connections>
                 </viewController>
@@ -68,6 +97,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
